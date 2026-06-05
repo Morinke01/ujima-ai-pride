@@ -5,7 +5,7 @@ async function submitLoan() {
     amount: Number(document.getElementById("amount").value)
   };
 
-  const res = await fetch("http://localhost:5000/api/loan", {
+  const res = await fetch("ujima-ai-backend.onrender.com/api/loan", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

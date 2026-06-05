@@ -3,7 +3,7 @@ let scoreChartInstance = null;
 
 async function loadData() {
   try {
-    const res = await fetch("http://localhost:5000/api/logs");
+    const res = await fetch("ujima-ai-backend.onrender.com/api");
     const data = await res.json();
 
     console.log("RAW DATA:", data);
