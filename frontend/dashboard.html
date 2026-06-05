@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ujima AI | Analytics Dashboard</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+  <style>
+    body {
+      background: #0f172a;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+      background: #111827;
+      padding: 15px;
+    }
+
+    .navbar a {
+      color: white;
+      margin-right: 15px;
+      text-decoration: none;
+      opacity: 0.8;
+    }
+
+    .navbar a:hover {
+      opacity: 1;
+    }
+
+    .header {
+      text-align: center;
+      padding: 30px;
+    }
+
+    .header h1 {
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    .value {
+      font-size: 28px;
+      font-weight: bold;
+      color: #22c55e;
+    }
+
+    .subtitle {
+      opacity: 0.7;
+      font-size: 14px;
+    }
+
+    .footer-note {
+      text-align: center;
+      opacity: 0.6;
+      margin-top: 20px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <a href="index.html">🏠 Loan App</a>
+  <a href="dashboard.html">📊 Analytics</a>
+  <a href="bias-dashboard.html">⚖️ Bias Audit</a>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <h1>🦁 Ujima AI Analytics Dashboard</h1>
+  <p class="subtitle">
+    Real-time SACCO intelligence • Harvest-aware lending • Ethical AI monitoring
+  </p>
+</div>
+
+<!-- STATS GRID -->
+<div class="grid">
+
+  <div class="card">
+    <div class="subtitle">Total Applications</div>
+    <div class="value" id="total">Loading...</div>
+  </div>
+
+  <div class="card">
+    <div class="subtitle">Approval Rate</div>
+    <div class="value" id="approval">Loading...</div>
+  </div>
+
+  <div class="card">
+    <div class="subtitle">Market Vendor Cases</div>
+    <div class="value" id="bias">Loading...</div>
+  </div>
+
+  <div class="card">
+    <div class="subtitle">Harvest Intelligence</div>
+    <div class="value" id="harvest">Loading...</div>
+  </div>
+
+</div>
+
+<div class="footer-note">
+  Powered by Ujima AI Pride System • Built for SACCO financial inclusion
+</div>
+
+<script src="dashboard.js"></script>
+
+</body>
+</html>

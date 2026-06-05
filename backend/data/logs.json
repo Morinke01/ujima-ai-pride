@@ -1,0 +1,242 @@
+[
+  {
+    "input": {
+      "name": "Ali",
+      "occupation": "Farmer",
+      "amount": 10000
+    },
+    "result": {
+      "name": "Ali",
+      "occupation": "Farmer",
+      "score": 45,
+      "decision": "REJECTED",
+      "explanation": "Score includes harvest-cycle adjustment + informal economy weighting (Kenya SACCO model)."
+    },
+    "timestamp": "2026-06-05T10:49:30.937Z"
+  },
+  {
+    "input": {
+      "name": "Ali",
+      "occupation": "Market vendor",
+      "amount": 20000
+    },
+    "result": {
+      "name": "Ali",
+      "occupation": "Market vendor",
+      "score": 45,
+      "decision": "REJECTED",
+      "explanation": "Score includes harvest-cycle adjustment + informal economy weighting (Kenya SACCO model)."
+    },
+    "timestamp": "2026-06-05T11:02:27.033Z"
+  },
+  {
+    "input": {
+      "name": "Elijah Julius",
+      "occupation": "farmer",
+      "amount": 20000
+    },
+    "result": {
+      "name": "Elijah Julius",
+      "occupation": "farmer",
+      "score": 70,
+      "decision": "REVIEW",
+      "explanation": "Score includes harvest-cycle adjustment + informal economy weighting (Kenya SACCO model)."
+    },
+    "timestamp": "2026-06-05T11:02:47.883Z"
+  },
+  {
+    "input": {
+      "name": "Elijah Julius",
+      "occupation": "farmer",
+      "amount": 20000
+    },
+    "result": {
+      "name": "Elijah Julius",
+      "occupation": "farmer",
+      "score": 70,
+      "decision": "REVIEW",
+      "explanation": "Score includes harvest-cycle adjustment + informal economy weighting (Kenya SACCO model)."
+    },
+    "timestamp": "2026-06-05T11:07:00.158Z"
+  },
+  {
+    "input": {
+      "name": "Elijah Julius",
+      "occupation": "farmer",
+      "amount": 20000
+    },
+    "result": {
+      "name": "Elijah Julius",
+      "occupation": "farmer",
+      "score": 70,
+      "decision": "REVIEW",
+      "explanation": "Score includes harvest-cycle adjustment + informal economy weighting (Kenya SACCO model)."
+    },
+    "timestamp": "2026-06-05T11:07:02.088Z"
+  },
+  {
+    "input": {
+      "name": "Elijah Julius",
+      "occupation": "trader",
+      "amount": 4500
+    },
+    "result": {
+      "name": "Elijah Julius",
+      "occupation": "trader",
+      "score": 45,
+      "decision": "REJECTED",
+      "explanation": "Score includes harvest-cycle adjustment + informal economy weighting (Kenya SACCO model)."
+    },
+    "timestamp": "2026-06-05T11:07:24.007Z"
+  },
+  {
+    "input": {
+      "name": "Elijah Julius",
+      "occupation": "trader",
+      "amount": 4500
+    },
+    "result": {
+      "name": "Elijah Julius",
+      "occupation": "trader",
+      "score": 45,
+      "decision": "REJECTED",
+      "explanation": "Score includes harvest-cycle adjustment + informal economy weighting (Kenya SACCO model)."
+    },
+    "timestamp": "2026-06-05T11:11:14.116Z"
+  },
+  {
+    "input": {
+      "name": "Elijah Julius",
+      "occupation": "Famer",
+      "amount": 54555
+    },
+    "result": {
+      "name": "Elijah Julius",
+      "occupation": "Famer",
+      "score": 30,
+      "decision": "REJECTED",
+      "explanation": "Score includes harvest-cycle adjustment + informal economy weighting (Kenya SACCO model)."
+    },
+    "timestamp": "2026-06-05T11:22:05.508Z"
+  },
+  {
+    "input": {
+      "name": "Elijah Julius",
+      "occupation": "market vendor",
+      "amount": 100000
+    },
+    "result": {
+      "name": "Elijah Julius",
+      "occupation": "market vendor",
+      "score": 60,
+      "decision": "REVIEW",
+      "explanation": "Score includes harvest-cycle adjustment + informal economy weighting (Kenya SACCO model)."
+    },
+    "timestamp": "2026-06-05T11:55:29.429Z"
+  },
+  {
+    "input": {
+      "name": "Elly",
+      "occupation": "Trader",
+      "amount": 52000
+    },
+    "result": {
+      "name": "Elly",
+      "occupation": "Trader",
+      "score": 30,
+      "decision": "REJECTED",
+      "explanation": "Score includes harvest-cycle adjustment + informal economy weighting (Kenya SACCO model)."
+    },
+    "timestamp": "2026-06-05T12:24:06.490Z"
+  },
+  {
+    "input": {
+      "name": "Elly",
+      "occupation": "Trader",
+      "amount": 52000
+    },
+    "result": {
+      "name": "Elly",
+      "occupation": "Trader",
+      "score": 30,
+      "decision": "REJECTED",
+      "explanation": "Score includes harvest-cycle adjustment + informal economy weighting (Kenya SACCO model)."
+    },
+    "timestamp": "2026-06-05T12:29:47.010Z"
+  },
+  {
+    "input": {
+      "name": "Elly",
+      "occupation": "Trader",
+      "amount": 52000
+    },
+    "result": {
+      "name": "Elly",
+      "occupation": "Trader",
+      "score": 30,
+      "decision": "REJECTED",
+      "explanation": "Score includes harvest-cycle adjustment + informal economy weighting (Kenya SACCO model)."
+    },
+    "timestamp": "2026-06-05T12:30:37.994Z"
+  },
+  {
+    "input": {
+      "name": "Elly",
+      "occupation": "formal employee",
+      "amount": 100000
+    },
+    "result": {
+      "name": "Elly",
+      "occupation": "formal employee",
+      "score": 40,
+      "decision": "REJECTED",
+      "explanation": "Score includes harvest-cycle adjustment + informal economy weighting (Kenya SACCO model)."
+    },
+    "timestamp": "2026-06-05T12:31:15.776Z"
+  },
+  {
+    "input": {
+      "name": "Elly",
+      "occupation": "formal employee",
+      "amount": 1000
+    },
+    "result": {
+      "name": "Elly",
+      "occupation": "formal employee",
+      "score": 55,
+      "decision": "REJECTED",
+      "explanation": "Score includes harvest-cycle adjustment + informal economy weighting (Kenya SACCO model)."
+    },
+    "timestamp": "2026-06-05T12:32:06.664Z"
+  },
+  {
+    "input": {
+      "name": "Elly",
+      "occupation": "formal employee",
+      "amount": 100
+    },
+    "result": {
+      "name": "Elly",
+      "occupation": "formal employee",
+      "score": 55,
+      "decision": "REJECTED",
+      "explanation": "Score includes harvest-cycle adjustment + informal economy weighting (Kenya SACCO model)."
+    },
+    "timestamp": "2026-06-05T12:32:11.522Z"
+  },
+  {
+    "input": {
+      "name": "Elly",
+      "occupation": "farmer",
+      "amount": 100
+    },
+    "result": {
+      "name": "Elly",
+      "occupation": "farmer",
+      "score": 70,
+      "decision": "REVIEW",
+      "explanation": "Score includes harvest-cycle adjustment + informal economy weighting (Kenya SACCO model)."
+    },
+    "timestamp": "2026-06-05T12:32:30.569Z"
+  }
+]

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bias & Fairness Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .alert {
+      padding: 10px;
+      background: #ffe5e5;
+      color: #b30000;
+      margin: 10px 0;
+      border-radius: 8px;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>⚖️ Ujima AI Bias & Fairness Dashboard</h1>
+
+<div id="biasAlert" class="alert">
+  ⚠️ Bias detected: Approval gap exceeds fairness threshold!
+</div>
+
+<div class="grid">
+
+  <div class="card">
+    <canvas id="approvalChart"></canvas>
+  </div>
+
+  <div class="card">
+    <canvas id="scoreChart"></canvas>
+  </div>
+
+</div>
+
+<script src="bias-dashboard.js"></script>
+
+</body>
+</html>

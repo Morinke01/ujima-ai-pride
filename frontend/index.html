@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ujima AI Platform</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: white;
+    }
+
+    .card {
+      border-radius: 15px;
+      border: none;
+    }
+
+    .hero {
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 40px;
+      font-weight: bold;
+    }
+
+    .tagline {
+      opacity: 0.8;
+    }
+
+    .btn-primary {
+      background: #22c55e;
+      border: none;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .nav a {
+      color: white;
+      text-decoration: none;
+      opacity: 0.8;
+    }
+
+    .nav a:hover {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="hero">
+  <h1>🦁 Ujima AI Financial Intelligence</h1>
+  <p class="tagline">
+    Harvest-aware lending • Ethical AI • SACCO decision support system
+  </p>
+
+  <div class="nav">
+    <a href="index.html">Loan Form</a>
+    <a href="dashboard.html">Analytics</a>
+    <a href="bias-dashboard.html">Bias Audit</a>
+  </div>
+</div>
+
+<div class="container mt-4">
+  <div class="card p-4 text-dark">
+
+    <h3>Loan Application</h3>
+
+    <input class="form-control mt-2" id="name" placeholder="Name">
+    <input class="form-control mt-2" id="occupation" placeholder="Occupation">
+    <input class="form-control mt-2" id="amount" placeholder="Amount">
+
+    <button class="btn btn-primary mt-3" onclick="submitLoan()">
+      Submit Application
+    </button>
+
+    <div class="mt-3" id="result"></div>
+  </div>
+</div>
+
+<script>
+async function submitLoan() {
+  const data = {
+    name: document.getElementById("name").value,
+    occupation: document.getElementById("occupation").value,
+    amount: document.getElementById("amount").value
+  };
+
+  const res = await fetch("http://localhost:5000/api/loan", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+
+  const result = await res.json();
+
+  document.getElementById("result").innerHTML = `
+    <pre>${JSON.stringify(result, null, 2)}</pre>
+  `;
+}
+</script>
+
+</body>
+</html>
