@@ -1,5 +1,5 @@
 async function loadData() {
-  const res = await fetch("http://localhost:5000/api/logs");
+  const res = await fetch("https://ujima-ai-backend.onrender.com/api/logs");
   const data = await res.json();
 
   document.getElementById("total").innerText = data.length;
