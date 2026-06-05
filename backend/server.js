@@ -16,11 +16,24 @@ const ZAPIER_WEBHOOK_URL =
 app.use(cors());
 app.use(express.json());
 
+// ----------------------------
+// 📁 FILE SETUP (SAFE FOR RENDER)
+// ----------------------------
 const logFile = path.join(__dirname, "data", "logs.json");
 
-/**
- * 🧾 Audit Logging
- */
+// Ensure data folder exists
+if (!fs.existsSync(path.join(__dirname, "data"))) {
+  fs.mkdirSync(path.join(__dirname, "data"));
+}
+
+// Ensure logs file exists
+if (!fs.existsSync(logFile)) {
+  fs.writeFileSync(logFile, "[]");
+}
+
+// ----------------------------
+// 🧾 AUDIT LOGGING SYSTEM
+// ----------------------------
 function logDecision(data) {
   let logs = [];
 
@@ -38,9 +51,9 @@ function logDecision(data) {
   fs.writeFileSync(logFile, JSON.stringify(logs, null, 2));
 }
 
-/**
- * 🟢 SCOUT AGENT
- */
+// ----------------------------
+// 🟢 SCOUT AGENT
+// ----------------------------
 app.post("/api/scout", (req, res) => {
   console.log("SCOUT ROUTE HIT");
   console.log("Scout Request:", req.body);
@@ -52,9 +65,9 @@ app.post("/api/scout", (req, res) => {
   res.json(result);
 });
 
-/**
- * 🟡 GUARDIAN AGENT
- */
+// ----------------------------
+// 🟡 GUARDIAN AGENT + ZAPIER
+// ----------------------------
 app.post("/api/loan", async (req, res) => {
   console.log("====================================");
   console.log("API LOAN ROUTE HIT");
@@ -64,9 +77,9 @@ app.post("/api/loan", async (req, res) => {
 
   console.log("Guardian Result:", result);
 
-  /**
-   * 🔥 FIX 1: FORCE CLEAN PAYLOAD (CRITICAL FOR ZAPIER + SHEETS)
-   */
+  // ----------------------------
+  // 📦 CLEAN PAYLOAD FOR ZAPIER
+  // ----------------------------
   const payload = {
     timestamp: new Date().toISOString(),
     name: req.body.name || "UNKNOWN",
@@ -79,10 +92,11 @@ app.post("/api/loan", async (req, res) => {
 
   console.log("FINAL ZAPIER PAYLOAD:", payload);
 
-  // Zapier Integration
+  // ----------------------------
+  // 🔗 SEND TO ZAPIER
+  // ----------------------------
   try {
     console.log("Sending data to Zapier...");
-    console.log("Webhook URL:", ZAPIER_WEBHOOK_URL);
 
     const zapResponse = await axios.post(ZAPIER_WEBHOOK_URL, payload, {
       headers: {
@@ -92,21 +106,20 @@ app.post("/api/loan", async (req, res) => {
 
     console.log("✅ Zapier Success!");
     console.log("Status:", zapResponse.status);
-    console.log("Response:", zapResponse.data);
   } catch (error) {
     console.log("❌ Zapier Failed!");
 
     if (error.response) {
       console.log("Status:", error.response.status);
-      console.log("Response Data:", error.response.data);
+      console.log("Data:", error.response.data);
     } else {
-      console.log("Error Message:", error.message);
+      console.log("Error:", error.message);
     }
   }
 
-  /**
-   * 🧾 Local Audit Trail (TRACK compliance)
-   */
+  // ----------------------------
+  // 🧾 LOCAL AUDIT TRAIL
+  // ----------------------------
   logDecision({
     input: req.body,
     result,
@@ -114,9 +127,9 @@ app.post("/api/loan", async (req, res) => {
 
   console.log("Decision logged locally.");
 
-  /**
-   * 🔴 Escalation Logic
-   */
+  // ----------------------------
+  // 🔴 ESCALATION LOGIC
+  // ----------------------------
   if (result.decision === "REVIEW") {
     const hunter = hunterAgent(req.body);
 
@@ -137,14 +150,19 @@ app.post("/api/loan", async (req, res) => {
   });
 });
 
-/**
- * 📊 Logs API
- */
+// ----------------------------
+// 📊 LOGS ENDPOINT
+// ----------------------------
 app.get("/api/logs", (req, res) => {
   const logs = JSON.parse(fs.readFileSync(logFile));
   res.json(logs);
 });
 
-app.listen(5000, () => {
-  console.log("🦁 Ujima AI PRIDE running on http://localhost:5000");
+// ----------------------------
+// 🚀 RENDER SAFE SERVER START
+// ----------------------------
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`🦁 Ujima AI PRIDE running on port ${PORT}`);
 });
