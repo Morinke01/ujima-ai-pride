@@ -1,7 +1,20 @@
+const RENDER_API_BASE = "https://ujima-ai-backend.onrender.com";
 const API_BASE =
-  window.location.protocol === "file:"
-    ? "https://ujima-ai-backend.onrender.com"
+  window.location.protocol === "file:" || window.location.hostname.includes("vercel.app")
+    ? RENDER_API_BASE
     : window.location.origin;
+
+async function readJsonResponse(res) {
+  const text = await res.text();
+
+  try {
+    return text ? JSON.parse(text) : {};
+  } catch (error) {
+    return {
+      error: text || "Server returned an unreadable response.",
+    };
+  }
+}
 
 async function submitLoan() {
   const resultEl = document.getElementById("result");
@@ -25,7 +38,7 @@ async function submitLoan() {
       body: JSON.stringify(data),
     });
 
-    const result = await res.json();
+    const result = await readJsonResponse(res);
 
     if (!res.ok) {
       throw new Error(result.error || "Application could not be submitted.");

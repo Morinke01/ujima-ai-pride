@@ -1,6 +1,7 @@
+const RENDER_API_BASE = "https://ujima-ai-backend.onrender.com";
 const API_BASE =
-  window.location.protocol === "file:"
-    ? "https://ujima-ai-backend.onrender.com"
+  window.location.protocol === "file:" || window.location.hostname.includes("vercel.app")
+    ? RENDER_API_BASE
     : window.location.origin;
 
 async function loadData() {
