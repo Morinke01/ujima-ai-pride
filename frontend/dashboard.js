@@ -4,12 +4,61 @@ const API_BASE =
     ? RENDER_API_BASE
     : window.location.origin;
 
+function escapeHtml(value = "") {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function formatAmount(amount) {
+  const value = Number(amount || 0);
+  return `KES ${value.toLocaleString()}`;
+}
+
+function statusClass(decision) {
+  return {
+    APPROVED: "status-approved",
+    REVIEW: "status-review",
+    REJECTED: "status-rejected",
+  }[decision] || "status-review";
+}
+
+function renderRecentRows(entries) {
+  const rows = entries
+    .slice()
+    .reverse()
+    .slice(0, 8)
+    .map((entry) => {
+      const input = entry.input || {};
+      const result = entry.result || {};
+      const decision = result.decision || "REVIEW";
+
+      return `
+        <tr>
+          <td>${escapeHtml(input.name || result.name || "Applicant")}</td>
+          <td>${escapeHtml(input.occupation || result.occupation || "Unknown")}</td>
+          <td>${formatAmount(input.amount || result.amount)}</td>
+          <td>${result.score ?? "N/A"}</td>
+          <td><span class="status-pill ${statusClass(decision)}">${decision}</span></td>
+        </tr>
+      `;
+    })
+    .join("");
+
+  document.getElementById("recentRows").innerHTML =
+    rows || `<tr><td colspan="5">No applications logged yet.</td></tr>`;
+}
+
 async function loadData() {
   try {
     const res = await fetch(`${API_BASE}/api/logs`);
     const data = await res.json();
     const safeData = Array.isArray(data) ? data.filter((d) => d.input && d.result) : [];
 
+    document.getElementById("emptyState").style.display = safeData.length ? "none" : "block";
     document.getElementById("total").innerText = safeData.length;
 
     const approved = safeData.filter((d) => d.result.decision === "APPROVED").length;
@@ -34,6 +83,8 @@ async function loadData() {
     document.getElementById("biasAlert").style.display =
       biasGap > 20 ? "block" : "none";
 
+    renderRecentRows(safeData);
+
     new Chart(document.getElementById("approvalChart"), {
       type: "bar",
       data: {
@@ -45,6 +96,12 @@ async function loadData() {
             backgroundColor: ["#22c55e", "#ef4444", "#f59e0b"],
           },
         ],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+        },
       },
     });
 
@@ -60,11 +117,22 @@ async function loadData() {
           },
         ],
       },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            min: 0,
+            max: 100,
+          },
+        },
+      },
     });
   } catch (error) {
     document.getElementById("biasAlert").innerText =
       "Dashboard data could not be loaded. Check that the backend is running.";
     document.getElementById("biasAlert").style.display = "block";
+    document.getElementById("recentRows").innerHTML =
+      `<tr><td colspan="5">Unable to load applications.</td></tr>`;
   }
 }
 

@@ -3,14 +3,69 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bias & Fairness Dashboard</title>
+  <title>Ujima AI Bias Audit</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
-      font-family: Arial, sans-serif;
       background: #f5f7fb;
       color: #111827;
-      padding: 20px;
+      font-family: Arial, sans-serif;
+      margin: 0;
+    }
+
+    .topbar {
+      background: #101827;
+      padding: 14px 20px;
+    }
+
+    .nav-wrap {
+      align-items: center;
+      display: flex;
+      gap: 18px;
+      justify-content: space-between;
+      margin: 0 auto;
+      max-width: 1120px;
+    }
+
+    .brand {
+      color: white;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .nav-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .nav-actions a {
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 8px;
+      color: white;
+      padding: 8px 12px;
+      text-decoration: none;
+    }
+
+    .nav-actions a.active,
+    .nav-actions a:hover {
+      background: white;
+      color: #101827;
+    }
+
+    main {
+      margin: 0 auto;
+      max-width: 1120px;
+      padding: 30px 20px 48px;
+    }
+
+    .page-header {
+      margin-bottom: 22px;
+    }
+
+    .page-header p {
+      color: #475569;
+      max-width: 760px;
     }
 
     .grid {
@@ -21,51 +76,108 @@
 
     .card {
       background: white;
-      padding: 16px;
       border-radius: 8px;
       box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      padding: 16px;
     }
 
-    h1 {
-      text-align: center;
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
     }
 
-    #summary {
-      text-align: center;
-      margin: 0 auto 20px;
-      max-width: 760px;
+    .metric small {
+      color: #64748b;
+      display: block;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 1.65rem;
+      margin-top: 6px;
     }
 
     .alert {
-      padding: 12px;
       background: #fee2e2;
-      color: #991b1b;
-      margin: 10px auto 20px;
       border-radius: 8px;
+      color: #991b1b;
       display: none;
-      max-width: 760px;
-      text-align: center;
+      margin: 0 0 20px;
+      padding: 12px;
+    }
+
+    .note {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      color: #1e3a8a;
+      margin-bottom: 20px;
+      padding: 12px;
+    }
+
+    @media (max-width: 720px) {
+      .nav-wrap {
+        align-items: flex-start;
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 
 <body>
-  <h1>Ujima AI Bias & Fairness Dashboard</h1>
-
-  <p id="summary">Loading audit data...</p>
-
-  <div id="biasAlert" class="alert">
-    Bias detected: approval gap exceeds the fairness threshold.
-  </div>
-
-  <div class="grid">
-    <div class="card">
-      <canvas id="approvalChart"></canvas>
+  <nav class="topbar">
+    <div class="nav-wrap">
+      <a class="brand" href="index.html">Ujima AI PRIDE</a>
+      <div class="nav-actions">
+        <a href="index.html">Apply</a>
+        <a href="dashboard.html">Analytics</a>
+        <a class="active" href="bias-dashboard.html">Bias Audit</a>
+      </div>
     </div>
-    <div class="card">
-      <canvas id="scoreChart"></canvas>
+  </nav>
+
+  <main>
+    <header class="page-header">
+      <h1>Bias & Fairness Audit</h1>
+      <p>Compare approval rates and average scores across applicant groups so officer review stays transparent.</p>
+    </header>
+
+    <div id="biasAlert" class="alert">
+      Bias detected: approval gap exceeds the fairness threshold.
     </div>
-  </div>
+
+    <div id="summaryNote" class="note">Loading audit data...</div>
+
+    <section class="summary-grid">
+      <div class="card metric">
+        <small>Audited Applications</small>
+        <strong id="auditedCount">0</strong>
+      </div>
+      <div class="card metric">
+        <small>Approval Gap</small>
+        <strong id="approvalGap">0%</strong>
+      </div>
+      <div class="card metric">
+        <small>Score Gap</small>
+        <strong id="scoreGap">0</strong>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h3>Approval Rate by Group</h3>
+        <canvas id="approvalChart"></canvas>
+      </div>
+      <div class="card">
+        <h3>Average Score by Group</h3>
+        <canvas id="scoreChart"></canvas>
+      </div>
+    </section>
+  </main>
 
   <script src="bias-dashboard.js"></script>
 </body>
