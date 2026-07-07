@@ -9,160 +9,142 @@ const guardianAgent = require("./agents/guardian");
 const hunterAgent = require("./agents/hunter");
 
 const app = express();
+const PORT = process.env.PORT || 5000;
+const ZAPIER_WEBHOOK_URL = process.env.ZAPIER_WEBHOOK_URL || "";
 
-const ZAPIER_WEBHOOK_URL =
-  "https://hooks.zapier.com/hooks/catch/27815560/4bk9e35/";
+const frontendPath = path.join(__dirname, "..", "frontend");
+const logFile = path.join(__dirname, "data", "logs.json");
+const dataDir = path.dirname(logFile);
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static(frontendPath));
 
-// ----------------------------
-// 📁 FILE SETUP (SAFE FOR RENDER)
-// ----------------------------
-const logFile = path.join(__dirname, "data", "logs.json");
-
-// Ensure data folder exists
-if (!fs.existsSync(path.join(__dirname, "data"))) {
-  fs.mkdirSync(path.join(__dirname, "data"));
+if (!fs.existsSync(dataDir)) {
+  fs.mkdirSync(dataDir, { recursive: true });
 }
 
-// Ensure logs file exists
 if (!fs.existsSync(logFile)) {
   fs.writeFileSync(logFile, "[]");
 }
 
-// ----------------------------
-// 🧾 AUDIT LOGGING SYSTEM
-// ----------------------------
-function logDecision(data) {
-  let logs = [];
-
+function readLogs() {
   try {
-    logs = JSON.parse(fs.readFileSync(logFile));
+    const logs = JSON.parse(fs.readFileSync(logFile, "utf8"));
+    return Array.isArray(logs) ? logs : [];
   } catch (err) {
-    logs = [];
+    return [];
   }
-
-  logs.push({
-    ...data,
-    timestamp: new Date().toISOString(),
-  });
-
-  fs.writeFileSync(logFile, JSON.stringify(logs, null, 2));
 }
 
-// ----------------------------
-// 🟢 SCOUT AGENT
-// ----------------------------
+function logDecision(data) {
+  const logs = readLogs();
+  const entry = {
+    ...data,
+    timestamp: new Date().toISOString(),
+  };
+
+  logs.push(entry);
+  fs.writeFileSync(logFile, JSON.stringify(logs, null, 2));
+  return entry;
+}
+
+function normalizeOccupation(occupation = "") {
+  return String(occupation).trim().toLowerCase();
+}
+
+function validateLoanApplication(body) {
+  const name = String(body.name || "").trim();
+  const occupation = normalizeOccupation(body.occupation);
+  const amount = Number(body.amount);
+
+  if (!name) return { error: "Name is required." };
+  if (!occupation) return { error: "Occupation is required." };
+  if (!Number.isFinite(amount) || amount <= 0) {
+    return { error: "Loan amount must be a positive number." };
+  }
+
+  return {
+    data: {
+      name,
+      occupation,
+      amount,
+    },
+  };
+}
+
+app.get("/api/health", (req, res) => {
+  res.json({
+    status: "ok",
+    service: "ujima-ai-pride",
+    timestamp: new Date().toISOString(),
+  });
+});
+
 app.post("/api/scout", (req, res) => {
-  console.log("SCOUT ROUTE HIT");
-  console.log("Scout Request:", req.body);
-
   const result = scoutAgent(req.body);
-
-  console.log("Scout Result:", result);
-
   res.json(result);
 });
 
-// ----------------------------
-// 🟡 GUARDIAN AGENT + ZAPIER
-// ----------------------------
 app.post("/api/loan", async (req, res) => {
-  console.log("====================================");
-  console.log("API LOAN ROUTE HIT");
-  console.log("Request Body:", req.body);
+  const validation = validateLoanApplication(req.body);
 
-  const result = guardianAgent(req.body);
+  if (validation.error) {
+    return res.status(400).json({ error: validation.error });
+  }
 
-  console.log("Guardian Result:", result);
-
-  // ----------------------------
-  // 📦 CLEAN PAYLOAD FOR ZAPIER
-  // ----------------------------
+  const application = validation.data;
+  const result = guardianAgent(application);
   const payload = {
     timestamp: new Date().toISOString(),
-    name: req.body.name || "UNKNOWN",
-    occupation: req.body.occupation || "UNKNOWN",
-    amount: Number(req.body.amount || 0),
+    name: application.name,
+    occupation: application.occupation,
+    amount: application.amount,
     score: result?.score || 0,
     decision: result?.decision || "UNKNOWN",
     escalated: result?.decision === "REVIEW",
   };
 
-  console.log("FINAL ZAPIER PAYLOAD:", payload);
-
-  // ----------------------------
-  // 🔗 SEND TO ZAPIER
-  // ----------------------------
-  try {
-    console.log("Sending data to Zapier...");
-
-    const zapResponse = await axios.post(ZAPIER_WEBHOOK_URL, payload, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    console.log("✅ Zapier Success!");
-    console.log("Status:", zapResponse.status);
-  } catch (error) {
-    console.log("❌ Zapier Failed!");
-
-    if (error.response) {
-      console.log("Status:", error.response.status);
-      console.log("Data:", error.response.data);
-    } else {
-      console.log("Error:", error.message);
+  if (ZAPIER_WEBHOOK_URL) {
+    try {
+      await axios.post(ZAPIER_WEBHOOK_URL, payload, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        timeout: 5000,
+      });
+    } catch (error) {
+      console.warn("Zapier webhook failed:", error.message);
     }
   }
 
-  // ----------------------------
-  // 🧾 LOCAL AUDIT TRAIL
-  // ----------------------------
-  logDecision({
-    input: req.body,
+  const auditEntry = logDecision({
+    input: application,
     result,
   });
 
-  console.log("Decision logged locally.");
-
-  // ----------------------------
-  // 🔴 ESCALATION LOGIC
-  // ----------------------------
   if (result.decision === "REVIEW") {
-    const hunter = hunterAgent(req.body);
-
-    console.log("Escalating to Hunter Agent...");
-    console.log(hunter);
-
     return res.json({
       guardian: result,
-      escalation: hunter,
+      escalation: hunterAgent(application),
+      audit: auditEntry,
     });
   }
 
-  console.log("Returning Guardian Decision");
-  console.log("====================================");
-
   res.json({
     guardian: result,
+    audit: auditEntry,
   });
 });
 
-// ----------------------------
-// 📊 LOGS ENDPOINT
-// ----------------------------
 app.get("/api/logs", (req, res) => {
-  const logs = JSON.parse(fs.readFileSync(logFile));
-  res.json(logs);
+  res.json(readLogs());
 });
 
-// ----------------------------
-// 🚀 RENDER SAFE SERVER START
-// ----------------------------
-const PORT = process.env.PORT || 5000;
+app.get(/.*/, (req, res) => {
+  res.sendFile(path.join(frontendPath, "index.html"));
+});
 
 app.listen(PORT, () => {
-  console.log(`🦁 Ujima AI PRIDE running on port ${PORT}`);
+  console.log(`Ujima AI PRIDE running on port ${PORT}`);
 });

@@ -2,35 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ujima AI Pride</title>
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ujima AI PRIDE</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
     body {
-      background: linear-gradient(135deg, #0f172a, #1e293b);
+      background: #101827;
       color: white;
       scroll-behavior: smooth;
     }
 
     .hero {
       text-align: center;
-      padding: 80px 20px 40px;
+      padding: 72px 20px 36px;
     }
 
     .hero h1 {
-      font-size: 48px;
+      font-size: clamp(2.25rem, 6vw, 3.75rem);
       font-weight: 800;
     }
 
     .tagline {
-      opacity: 0.8;
-      margin-top: 10px;
+      color: #dbeafe;
+      margin-top: 12px;
     }
 
     .nav-links {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
       gap: 20px;
       margin-top: 20px;
@@ -39,7 +38,7 @@
     .nav-links a {
       color: white;
       text-decoration: none;
-      opacity: 0.8;
+      opacity: 0.82;
     }
 
     .nav-links a:hover {
@@ -48,206 +47,165 @@
 
     .card {
       border: none;
-      border-radius: 15px;
+      border-radius: 8px;
     }
 
     .section-title {
       text-align: center;
-      margin-top: 60px;
-      margin-bottom: 30px;
+      margin-top: 56px;
+      margin-bottom: 24px;
       font-weight: 700;
     }
 
     .btn-primary {
-      background: #22c55e;
+      background: #16a34a;
       border: none;
+    }
+
+    #result pre {
+      background: #0f172a;
+      color: #fff;
+      padding: 12px;
+      border-radius: 8px;
+      white-space: pre-wrap;
     }
 
     footer {
       margin-top: 60px;
       padding: 30px;
       text-align: center;
-      opacity: 0.8;
+      color: #cbd5e1;
     }
   </style>
 </head>
 
 <body>
+  <div class="hero">
+    <h1>Ujima AI PRIDE</h1>
+    <p class="tagline">
+      Ethical AI-powered loan assessment for African SACCOs<br />
+      Harvest-aware, bias-conscious, and community-driven
+    </p>
 
-<!-- HERO SECTION -->
-<div class="hero">
-  <h1>🦁 Ujima AI Pride</h1>
-  <p class="tagline">
-    Ethical AI-Powered Loan Assessment for African SACCOs<br>
-    Harvest-aware • Bias-conscious • Community-driven
-  </p>
+    <div class="nav-links">
+      <a href="#loanForm">Apply for Loan</a>
+      <a href="dashboard.html">Analytics</a>
+      <a href="bias-dashboard.html">Bias Audit</a>
+    </div>
 
-  <div class="nav-links">
-    <a href="#loanForm">Apply for Loan</a>
-    <a href="dashboard.html">Analytics</a>
-    <a href="bias-dashboard.html">Bias Audit</a>
+    <div class="mt-4">
+      <a href="#loanForm" class="btn btn-success btn-lg me-2">Apply Now</a>
+      <a href="dashboard.html" class="btn btn-outline-light btn-lg">View Dashboard</a>
+    </div>
   </div>
 
-  <div class="mt-4">
-    <a href="#loanForm" class="btn btn-success btn-lg me-2">Apply Now</a>
-    <a href="dashboard.html" class="btn btn-outline-light btn-lg">View Dashboard</a>
-  </div>
-</div>
+  <section class="container">
+    <h2 class="section-title">Our AI PRIDE</h2>
 
-<!-- AI PRIDE SECTION -->
-<section class="container">
-  <h2 class="section-title">🧠 Our AI Pride</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card p-4 text-dark h-100">
+          <h4>Scout Agent</h4>
+          <p>Financial literacy coach for savings behavior, harvest cycles, and repayment planning.</p>
+        </div>
+      </div>
 
-  <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card p-4 text-dark h-100">
+          <h4>Guardian Agent</h4>
+          <p>Core decision engine that evaluates loan applications using fair, harvest-aware rules.</p>
+        </div>
+      </div>
 
-    <div class="col-md-4">
-      <div class="card p-4 text-dark h-100">
-        <h4>🟢 Scout Agent</h4>
-        <p>
-          Financial literacy coach that educates members on
-          savings behavior, harvest cycles, and repayment planning.
-        </p>
+      <div class="col-md-4">
+        <div class="card p-4 text-dark h-100">
+          <h4>Hunter Agent</h4>
+          <p>Human-in-the-loop escalation for complex applications that need officer review.</p>
+        </div>
       </div>
     </div>
+  </section>
 
-    <div class="col-md-4">
-      <div class="card p-4 text-dark h-100">
-        <h4>🟡 Guardian Agent</h4>
-        <p>
-          Core decision engine that evaluates loan applications
-          using fair, harvest-aware scoring models.
-        </p>
+  <section class="container">
+    <h2 class="section-title">How It Works</h2>
+
+    <div class="row text-center">
+      <div class="col-md-3">
+        <h5>1. Apply</h5>
+        <p>Submit a loan application.</p>
+      </div>
+      <div class="col-md-3">
+        <h5>2. Scout</h5>
+        <p>Receive financial guidance.</p>
+      </div>
+      <div class="col-md-3">
+        <h5>3. Guardian</h5>
+        <p>Run the loan evaluation.</p>
+      </div>
+      <div class="col-md-3">
+        <h5>4. Decision</h5>
+        <p>Get a transparent outcome.</p>
       </div>
     </div>
+  </section>
 
-    <div class="col-md-4">
-      <div class="card p-4 text-dark h-100">
-        <h4>🔴 Hunter Agent</h4>
-        <p>
-          Human-in-the-loop escalation system for complex or
-          high-risk applications requiring manual review.
-        </p>
+  <section class="container">
+    <h2 class="section-title">Ethical AI Framework</h2>
+
+    <div class="row g-4">
+      <div class="col-md-3">
+        <div class="card p-3 text-dark h-100">
+          <h5>ETHOS</h5>
+          <p>Dignity-first decision making</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card p-3 text-dark h-100">
+          <h5>TRACK</h5>
+          <p>Bias detection and audit trails</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card p-3 text-dark h-100">
+          <h5>OASIS</h5>
+          <p>Data sovereignty and consent</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card p-3 text-dark h-100">
+          <h5>PRIDE</h5>
+          <p>Human oversight and escalation</p>
+        </div>
       </div>
     </div>
+  </section>
 
-  </div>
-</section>
+  <section id="loanForm" class="container mt-5 mb-5">
+    <h2 class="section-title">Loan Application</h2>
 
-<!-- WORKFLOW -->
-<section class="container">
-  <h2 class="section-title">⚙️ How It Works</h2>
+    <div class="card p-4 text-dark">
+      <label class="form-label" for="name">Full Name</label>
+      <input class="form-control" id="name" placeholder="Full Name" />
 
-  <div class="row text-center">
+      <label class="form-label mt-3" for="occupation">Occupation</label>
+      <input class="form-control" id="occupation" placeholder="market vendor, farmer, trader" />
 
-    <div class="col-md-3">
-      <h5>1. Apply</h5>
-      <p>Submit loan application</p>
+      <label class="form-label mt-3" for="amount">Loan Amount</label>
+      <input class="form-control" id="amount" type="number" min="1" placeholder="Amount in KES" />
+
+      <button id="submitButton" class="btn btn-primary mt-3 w-100" onclick="submitLoan()">
+        Submit Application
+      </button>
+
+      <div class="mt-3" id="result"></div>
     </div>
+  </section>
 
-    <div class="col-md-3">
-      <h5>2. Scout</h5>
-      <p>Financial guidance stage</p>
-    </div>
+  <footer>
+    <p>Ujima AI PRIDE - Ethical AI for African Financial Inclusion</p>
+    <p>Built for SACCOs, farmers, and informal traders across Africa</p>
+  </footer>
 
-    <div class="col-md-3">
-      <h5>3. Guardian</h5>
-      <p>AI loan evaluation</p>
-    </div>
-
-    <div class="col-md-3">
-      <h5>4. Decision</h5>
-      <p>Transparent outcome</p>
-    </div>
-
-  </div>
-</section>
-
-<!-- ETHICAL AI -->
-<section class="container">
-  <h2 class="section-title">⚖️ Ethical AI Framework</h2>
-
-  <div class="row g-4">
-
-    <div class="col-md-3">
-      <div class="card p-3 text-dark">
-        <h5>ETHOS</h5>
-        <p>Dignity-first decision making</p>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="card p-3 text-dark">
-        <h5>TRACK</h5>
-        <p>Bias detection & audit trails</p>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="card p-3 text-dark">
-        <h5>OASIS</h5>
-        <p>Data sovereignty & consent</p>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="card p-3 text-dark">
-        <h5>PRIDE</h5>
-        <p>Human oversight & escalation</p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- LOAN FORM -->
-<section id="loanForm" class="container mt-5 mb-5">
-  <h2 class="section-title">💰 Loan Application</h2>
-
-  <div class="card p-4 text-dark">
-
-    <input class="form-control mt-2" id="name" placeholder="Full Name">
-    <input class="form-control mt-2" id="occupation" placeholder="Occupation (e.g. trader, farmer)">
-    <input class="form-control mt-2" id="amount" placeholder="Loan Amount">
-
-    <button class="btn btn-primary mt-3 w-100" onclick="submitLoan()">
-      Submit Application
-    </button>
-
-    <div class="mt-3" id="result"></div>
-
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <p>🦁 Ujima AI Pride • Ethical AI for African Financial Inclusion</p>
-  <p>Built for SACCOs, farmers, and informal traders across Africa</p>
-</footer>
-
-<!-- SCRIPT -->
-<script>
-async function submitLoan() {
-  const data = {
-    name: document.getElementById("name").value,
-    occupation: document.getElementById("occupation").value,
-    amount: document.getElementById("amount").value
-  };
-
-  const res = await fetch("https://ujima-ai-backend.onrender.com/api/loan", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
-  });
-
-  const result = await res.json();
-
-  document.getElementById("result").innerHTML = `
-    <pre style="background:#0f172a;color:#fff;padding:10px;border-radius:10px;">
-${JSON.stringify(result, null, 2)}
-    </pre>
-  `;
-}
-</script>
-
+  <script src="app.js"></script>
 </body>
 </html>

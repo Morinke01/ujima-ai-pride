@@ -1,23 +1,30 @@
 function scoutAgent(input) {
-  const { name, occupation, message } = input;
+  const name = String(input.name || "member").trim();
+  const occupation = String(input.occupation || "").trim().toLowerCase();
+  const message = String(input.message || "").trim().toLowerCase();
+  const responses = [];
 
-  let response = "";
-
-  // 🌾 Kenyan context-aware financial coaching
   if (message.includes("no money")) {
-    response =
-      `Pole ${name}. Before next harvest, try small daily savings (KES 20–50). ` +
-      `Avoid loan dependency during school fee season.`;
+    responses.push(
+      `Pole ${name}. Before the next harvest, try small daily savings of KES 20-50 and avoid taking new loans during school fee season.`
+    );
   }
 
-  if (occupation === "market vendor") {
-    response +=
-      " Tip: Your income peaks daily — micro-savings work better than lump loans.";
+  if (occupation === "market vendor" || occupation === "trader") {
+    responses.push(
+      "Tip: Your income can change daily, so micro-savings usually work better than waiting for one large lump sum."
+    );
+  }
+
+  if (!responses.length) {
+    responses.push(
+      "Start with a realistic repayment plan, keep simple income records, and borrow only what your cash flow can support."
+    );
   }
 
   return {
     type: "SCOUT_MESSAGE",
-    response,
+    response: responses.join(" "),
   };
 }
 

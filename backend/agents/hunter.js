@@ -5,7 +5,7 @@ function hunterAgent(applicant) {
       `Assign officer review for ${applicant.name}. ` +
       `Occupation: ${applicant.occupation}. ` +
       `Loan request: KES ${applicant.amount}. ` +
-      `Requires human validation under PRIDE rules.`,
+      "Requires human validation under PRIDE rules.",
   };
 }
 

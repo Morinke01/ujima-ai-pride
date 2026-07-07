@@ -2,9 +2,11 @@
   "name": "ujima-ai-pride",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "backend/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node backend/server.js",
+    "dev": "node backend/server.js",
+    "test": "node --check backend/server.js && node --check backend/agents/guardian.js && node --check backend/agents/scout.js && node --check backend/agents/hunter.js"
   },
   "keywords": [],
   "author": "",

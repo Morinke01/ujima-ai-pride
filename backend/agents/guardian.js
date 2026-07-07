@@ -1,20 +1,19 @@
 function guardianAgent({ name, occupation, amount }) {
+  const normalizedOccupation = String(occupation || "").trim().toLowerCase();
+  const requestedAmount = Number(amount);
   let score = 50;
 
-  // 🌍 AFRICAN INFORMAL ECONOMY MODEL (IMPORTANT)
   const occupationWeights = {
     "market vendor": 30,
+    trader: 25,
     farmer: 25,
     "formal employee": 10,
     student: 5,
   };
 
-  score += occupationWeights[occupation] || 0;
+  score += occupationWeights[normalizedOccupation] || 0;
 
-  // 🌾 harvest-cycle awareness simulation
   const currentMonth = new Date().getMonth();
-
-  // assume harvest months = March, April, Sept, Oct
   const harvestMonths = [2, 3, 8, 9];
 
   if (harvestMonths.includes(currentMonth)) {
@@ -23,9 +22,8 @@ function guardianAgent({ name, occupation, amount }) {
     score -= 5;
   }
 
-  // 💰 risk rules
-  if (amount > 50000) score -= 15;
-  if (amount > 100000) score -= 25;
+  if (requestedAmount > 50000) score -= 15;
+  if (requestedAmount > 100000) score -= 25;
 
   let decision = "REVIEW";
   if (score >= 75) decision = "APPROVED";
@@ -33,11 +31,12 @@ function guardianAgent({ name, occupation, amount }) {
 
   return {
     name,
-    occupation,
+    occupation: normalizedOccupation,
+    amount: requestedAmount,
     score,
     decision,
     explanation:
-      "Score includes harvest-cycle adjustment + informal economy weighting (Kenya SACCO model).",
+      "Score includes harvest-cycle adjustment and informal economy weighting for a Kenya SACCO context.",
   };
 }
 
