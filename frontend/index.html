@@ -116,6 +116,33 @@
       margin-bottom: 0;
     }
 
+    .decision-factors {
+      display: grid;
+      gap: 10px;
+      list-style: none;
+      margin: 14px 0 0;
+      padding: 0;
+    }
+
+    .decision-factors li {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 4px 12px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .decision-factors span {
+      font-weight: 700;
+    }
+
+    .decision-factors small {
+      color: #4b5563;
+      grid-column: 1 / -1;
+    }
+
     .decision-approved {
       border-left-color: #16a34a;
     }
@@ -266,10 +293,32 @@
       <input class="form-control" id="name" placeholder="Full Name" />
 
       <label class="form-label mt-3" for="occupation">Occupation</label>
-      <input class="form-control" id="occupation" placeholder="market vendor, farmer, trader" />
+      <select class="form-select" id="occupation">
+        <option value="market vendor">Market vendor</option>
+        <option value="farmer">Farmer</option>
+        <option value="trader">Trader</option>
+        <option value="formal employee">Formal employee</option>
+        <option value="student">Student</option>
+      </select>
 
       <label class="form-label mt-3" for="amount">Loan Amount</label>
       <input class="form-control" id="amount" type="number" min="1" placeholder="Amount in KES" />
+
+      <div class="row">
+        <div class="col-md-6">
+          <label class="form-label mt-3" for="monthlyIncome">Monthly Income</label>
+          <input class="form-control" id="monthlyIncome" type="number" min="0" placeholder="Income in KES" />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label mt-3" for="repaymentMonths">Repayment Period</label>
+          <select class="form-select" id="repaymentMonths">
+            <option value="3">3 months</option>
+            <option value="6" selected>6 months</option>
+            <option value="9">9 months</option>
+            <option value="12">12 months</option>
+          </select>
+        </div>
+      </div>
 
       <button id="submitButton" class="btn btn-primary mt-3 w-100" onclick="submitLoan()">
         Submit Application

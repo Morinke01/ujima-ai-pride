@@ -50,18 +50,35 @@ function logDecision(data) {
 }
 
 function normalizeOccupation(occupation = "") {
-  return String(occupation).trim().toLowerCase();
+  const value = String(occupation).trim().toLowerCase();
+  const aliases = {
+    business: "trader",
+    vendor: "market vendor",
+    "market trader": "market vendor",
+    "farm worker": "farmer",
+    teacher: "formal employee",
+  };
+
+  return aliases[value] || value;
 }
 
 function validateLoanApplication(body) {
   const name = String(body.name || "").trim();
   const occupation = normalizeOccupation(body.occupation);
   const amount = Number(body.amount);
+  const monthlyIncome = Number(body.monthlyIncome || 0);
+  const repaymentMonths = Number(body.repaymentMonths || 6);
 
   if (!name) return { error: "Name is required." };
   if (!occupation) return { error: "Occupation is required." };
   if (!Number.isFinite(amount) || amount <= 0) {
     return { error: "Loan amount must be a positive number." };
+  }
+  if (!Number.isFinite(monthlyIncome) || monthlyIncome < 0) {
+    return { error: "Monthly income must be zero or a positive number." };
+  }
+  if (!Number.isFinite(repaymentMonths) || repaymentMonths < 1) {
+    return { error: "Repayment period must be at least one month." };
   }
 
   return {
@@ -69,6 +86,8 @@ function validateLoanApplication(body) {
       name,
       occupation,
       amount,
+      monthlyIncome,
+      repaymentMonths,
     },
   };
 }

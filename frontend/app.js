@@ -16,12 +16,24 @@ async function readJsonResponse(res) {
   }
 }
 
+function escapeHtml(value = "") {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 function getDecisionView(result) {
   const guardian = result.guardian || {};
   const decision = guardian.decision || "REVIEW";
   const score = guardian.score ?? "N/A";
-  const applicantName = guardian.name || "Applicant";
+  const applicantName = escapeHtml(guardian.name || "Applicant");
   const amount = guardian.amount ? `KES ${guardian.amount.toLocaleString()}` : "the requested amount";
+  const estimatedPayment = guardian.estimatedMonthlyPayment
+    ? `KES ${guardian.estimatedMonthlyPayment.toLocaleString()} per month`
+    : "Not calculated";
   const views = {
     APPROVED: {
       label: "Approved",
@@ -51,12 +63,31 @@ function getDecisionView(result) {
     decision,
     score,
     amount,
-    explanation: guardian.explanation || "The decision was made using the Guardian Agent scoring rules.",
+    estimatedPayment,
+    explanation: escapeHtml(
+      guardian.explanation || "The decision was made using the Guardian Agent scoring rules."
+    ),
+    factors: Array.isArray(guardian.factors) ? guardian.factors : [],
+    recommendation: escapeHtml(guardian.recommendation || views[decision].nextStep),
   };
 }
 
 function renderDecision(result) {
   const view = getDecisionView(result);
+  const factors = view.factors
+    .map((factor) => {
+      const impact = Number(factor.impact || 0);
+      const sign = impact > 0 ? "+" : "";
+
+      return `
+        <li>
+          <span>${escapeHtml(factor.label)}</span>
+          <strong>${sign}${impact}</strong>
+          <small>${escapeHtml(factor.detail)}</small>
+        </li>
+      `;
+    })
+    .join("");
 
   return `
     <div class="decision-card ${view.className}">
@@ -66,10 +97,12 @@ function renderDecision(result) {
       </div>
       <h3>${view.title}</h3>
       <p class="decision-meta">Requested amount: ${view.amount}</p>
+      <p class="decision-meta">Estimated repayment: ${view.estimatedPayment}</p>
       <p>${view.explanation}</p>
+      <ul class="decision-factors">${factors}</ul>
       <div class="decision-next">
         <strong>Next step</strong>
-        <p>${view.nextStep}</p>
+        <p>${view.recommendation}</p>
       </div>
     </div>
   `;
@@ -82,6 +115,8 @@ async function submitLoan() {
     name: document.getElementById("name").value,
     occupation: document.getElementById("occupation").value,
     amount: Number(document.getElementById("amount").value),
+    monthlyIncome: Number(document.getElementById("monthlyIncome").value),
+    repaymentMonths: Number(document.getElementById("repaymentMonths").value),
   };
 
   resultEl.textContent = "";
