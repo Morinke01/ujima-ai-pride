@@ -6,60 +6,201 @@
   <title>Ujima AI PRIDE</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
+    :root {
+      --ink: #102033;
+      --muted: #607089;
+      --surface: #ffffff;
+      --page: #f4f7fb;
+      --line: #dbe4ef;
+      --green: #159947;
+      --blue: #2563eb;
+      --amber: #d97706;
+      --red: #dc2626;
+      --teal: #0f766e;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      background: #101827;
-      color: white;
+      background: var(--page);
+      color: var(--ink);
       scroll-behavior: smooth;
     }
 
-    .hero {
-      text-align: center;
-      padding: 72px 20px 36px;
+    .topbar {
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 20;
     }
 
-    .hero h1 {
-      font-size: clamp(2.25rem, 6vw, 3.75rem);
+    .topbar-inner {
+      align-items: center;
+      display: flex;
+      gap: 20px;
+      justify-content: space-between;
+      padding: 14px 0;
+    }
+
+    .brand {
+      color: var(--ink);
       font-weight: 800;
-    }
-
-    .tagline {
-      color: #dbeafe;
-      margin-top: 12px;
+      letter-spacing: 0;
+      text-decoration: none;
     }
 
     .nav-links {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 20px;
+      gap: 10px;
+      justify-content: flex-end;
     }
 
     .nav-links a {
-      color: white;
-      text-decoration: none;
-      opacity: 0.82;
-    }
-
-    .nav-links a:hover {
-      opacity: 1;
-    }
-
-    .card {
-      border: none;
+      border: 1px solid transparent;
       border-radius: 8px;
+      color: var(--muted);
+      font-weight: 700;
+      padding: 8px 12px;
+      text-decoration: none;
     }
 
-    .section-title {
-      text-align: center;
-      margin-top: 56px;
-      margin-bottom: 24px;
-      font-weight: 700;
+    .nav-links a:hover,
+    .nav-links a.active {
+      background: #ecfdf5;
+      border-color: #bbf7d0;
+      color: #166534;
+    }
+
+    .hero {
+      background: #102033;
+      color: white;
+      padding: 48px 0;
+    }
+
+    .hero-grid {
+      align-items: center;
+      display: grid;
+      gap: 32px;
+      grid-template-columns: minmax(0, 0.92fr) minmax(340px, 0.78fr);
+    }
+
+    .hero-kicker {
+      color: #a7f3d0;
+      font-weight: 800;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.35rem, 6vw, 4.35rem);
+      font-weight: 900;
+      line-height: 1.02;
+      margin-bottom: 16px;
+    }
+
+    .tagline {
+      color: #dbeafe;
+      font-size: 1.08rem;
+      max-width: 650px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 26px 0;
     }
 
     .btn-primary {
-      background: #16a34a;
+      background: var(--green);
       border: none;
+    }
+
+    .btn-primary:hover {
+      background: #12823d;
+    }
+
+    .trust-row {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 26px;
+      max-width: 680px;
+    }
+
+    .trust-item {
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      padding: 14px;
+    }
+
+    .trust-item strong {
+      display: block;
+      font-size: 1.4rem;
+    }
+
+    .trust-item span {
+      color: #cbd5e1;
+      font-size: 0.9rem;
+    }
+
+    .application-panel {
+      background: var(--surface);
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      color: var(--ink);
+      padding: 24px;
+      box-shadow: 0 24px 80px rgba(2, 6, 23, 0.26);
+    }
+
+    .panel-heading {
+      align-items: flex-start;
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .panel-heading h2 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin: 0;
+    }
+
+    .panel-heading p {
+      color: var(--muted);
+      margin: 4px 0 0;
+    }
+
+    .live-pill {
+      background: #dcfce7;
+      border-radius: 999px;
+      color: #166534;
+      flex: 0 0 auto;
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 6px 10px;
+    }
+
+    .form-label {
+      color: #334155;
+      font-weight: 700;
+    }
+
+    .form-control,
+    .form-select {
+      border-color: #cbd5e1;
+      border-radius: 8px;
+      min-height: 46px;
+    }
+
+    #submitButton {
+      font-weight: 800;
+      min-height: 48px;
     }
 
     #result pre {
@@ -144,7 +285,7 @@
     }
 
     .decision-approved {
-      border-left-color: #16a34a;
+      border-left-color: var(--green);
     }
 
     .decision-approved .decision-label {
@@ -153,7 +294,7 @@
     }
 
     .decision-review {
-      border-left-color: #f59e0b;
+      border-left-color: var(--amber);
     }
 
     .decision-review .decision-label {
@@ -162,7 +303,7 @@
     }
 
     .decision-rejected {
-      border-left-color: #dc2626;
+      border-left-color: var(--red);
     }
 
     .decision-rejected .decision-label {
@@ -175,162 +316,323 @@
       color: #075985;
     }
 
+    .section {
+      padding: 56px 0 0;
+    }
+
+    .section-header {
+      margin-bottom: 24px;
+      max-width: 760px;
+    }
+
+    .section-header h2 {
+      font-weight: 850;
+    }
+
+    .section-header p {
+      color: var(--muted);
+    }
+
+    .agent-grid,
+    .ethics-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .agent-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .ethics-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+    }
+
+    .info-card h3 {
+      font-size: 1.12rem;
+      font-weight: 800;
+    }
+
+    .info-card p {
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    .accent-green {
+      border-top: 4px solid var(--green);
+    }
+
+    .accent-amber {
+      border-top: 4px solid var(--amber);
+    }
+
+    .accent-red {
+      border-top: 4px solid var(--red);
+    }
+
+    .workflow {
+      background: #eaf2ff;
+      border-bottom: 1px solid #c7d9f2;
+      border-top: 1px solid #c7d9f2;
+      margin-top: 56px;
+      padding: 36px 0;
+    }
+
+    .workflow-steps {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .step {
+      background: white;
+      border: 1px solid #c7d9f2;
+      border-radius: 8px;
+      padding: 18px;
+    }
+
+    .step-number {
+      align-items: center;
+      background: var(--blue);
+      border-radius: 999px;
+      color: white;
+      display: inline-flex;
+      font-weight: 800;
+      height: 32px;
+      justify-content: center;
+      margin-bottom: 10px;
+      width: 32px;
+    }
+
     footer {
-      margin-top: 60px;
-      padding: 30px;
+      color: #607089;
+      padding: 38px 0;
       text-align: center;
-      color: #cbd5e1;
+    }
+
+    @media (max-width: 991px) {
+      .hero-grid,
+      .agent-grid,
+      .ethics-grid,
+      .workflow-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .trust-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .topbar-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        justify-content: flex-start;
+      }
+
+      .hero {
+        padding: 32px 0;
+      }
+
+      .application-panel {
+        padding: 18px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="hero">
-    <h1>Ujima AI PRIDE</h1>
-    <p class="tagline">
-      Ethical AI-powered loan assessment for African SACCOs<br />
-      Harvest-aware, bias-conscious, and community-driven
-    </p>
-
-    <div class="nav-links">
-      <a href="#loanForm">Apply for Loan</a>
-      <a href="dashboard.html">Analytics</a>
-      <a href="bias-dashboard.html">Bias Audit</a>
-    </div>
-
-    <div class="mt-4">
-      <a href="#loanForm" class="btn btn-success btn-lg me-2">Apply Now</a>
-      <a href="dashboard.html" class="btn btn-outline-light btn-lg">View Dashboard</a>
-    </div>
-  </div>
-
-  <section class="container">
-    <h2 class="section-title">Our AI PRIDE</h2>
-
-    <div class="row g-4">
-      <div class="col-md-4">
-        <div class="card p-4 text-dark h-100">
-          <h4>Scout Agent</h4>
-          <p>Financial literacy coach for savings behavior, harvest cycles, and repayment planning.</p>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card p-4 text-dark h-100">
-          <h4>Guardian Agent</h4>
-          <p>Core decision engine that evaluates loan applications using fair, harvest-aware rules.</p>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card p-4 text-dark h-100">
-          <h4>Hunter Agent</h4>
-          <p>Human-in-the-loop escalation for complex applications that need officer review.</p>
-        </div>
+  <nav class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="index.html">Ujima AI PRIDE</a>
+      <div class="nav-links">
+        <a class="active" href="#loanForm">Apply</a>
+        <a href="dashboard.html">Analytics</a>
+        <a href="bias-dashboard.html">Bias Audit</a>
       </div>
     </div>
-  </section>
+  </nav>
 
-  <section class="container">
-    <h2 class="section-title">How It Works</h2>
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="hero-kicker">Ethical lending intelligence</div>
+          <h1>Fair, explainable loan decisions for SACCO communities.</h1>
+          <p class="tagline">
+            Ujima AI PRIDE helps SACCO officers assess applications using livelihood context,
+            harvest timing, repayment capacity, audit logs, and human review.
+          </p>
 
-    <div class="row text-center">
-      <div class="col-md-3">
-        <h5>1. Apply</h5>
-        <p>Submit a loan application.</p>
-      </div>
-      <div class="col-md-3">
-        <h5>2. Scout</h5>
-        <p>Receive financial guidance.</p>
-      </div>
-      <div class="col-md-3">
-        <h5>3. Guardian</h5>
-        <p>Run the loan evaluation.</p>
-      </div>
-      <div class="col-md-3">
-        <h5>4. Decision</h5>
-        <p>Get a transparent outcome.</p>
-      </div>
-    </div>
-  </section>
+          <div class="hero-actions">
+            <a href="#loanForm" class="btn btn-primary btn-lg">Start Assessment</a>
+            <a href="dashboard.html" class="btn btn-outline-light btn-lg">View Analytics</a>
+          </div>
 
-  <section class="container">
-    <h2 class="section-title">Ethical AI Framework</h2>
-
-    <div class="row g-4">
-      <div class="col-md-3">
-        <div class="card p-3 text-dark h-100">
-          <h5>ETHOS</h5>
-          <p>Dignity-first decision making</p>
+          <div class="trust-row" aria-label="Platform highlights">
+            <div class="trust-item">
+              <strong>4</strong>
+              <span>scoring factors</span>
+            </div>
+            <div class="trust-item">
+              <strong>3</strong>
+              <span>agent workflows</span>
+            </div>
+            <div class="trust-item">
+              <strong>100%</strong>
+              <span>auditable decisions</span>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="card p-3 text-dark h-100">
-          <h5>TRACK</h5>
-          <p>Bias detection and audit trails</p>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="card p-3 text-dark h-100">
-          <h5>OASIS</h5>
-          <p>Data sovereignty and consent</p>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="card p-3 text-dark h-100">
-          <h5>PRIDE</h5>
-          <p>Human oversight and escalation</p>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <section id="loanForm" class="container mt-5 mb-5">
-    <h2 class="section-title">Loan Application</h2>
+        <section id="loanForm" class="application-panel" aria-labelledby="loanFormTitle">
+          <div class="panel-heading">
+            <div>
+              <h2 id="loanFormTitle">Loan Application</h2>
+              <p>Enter applicant details for a Guardian Agent decision.</p>
+            </div>
+            <span class="live-pill">Live API</span>
+          </div>
 
-    <div class="card p-4 text-dark">
-      <label class="form-label" for="name">Full Name</label>
-      <input class="form-control" id="name" placeholder="Full Name" />
+          <label class="form-label" for="name">Full Name</label>
+          <input class="form-control" id="name" placeholder="Full Name" autocomplete="name" />
 
-      <label class="form-label mt-3" for="occupation">Occupation</label>
-      <select class="form-select" id="occupation">
-        <option value="market vendor">Market vendor</option>
-        <option value="farmer">Farmer</option>
-        <option value="trader">Trader</option>
-        <option value="formal employee">Formal employee</option>
-        <option value="student">Student</option>
-      </select>
-
-      <label class="form-label mt-3" for="amount">Loan Amount</label>
-      <input class="form-control" id="amount" type="number" min="1" placeholder="Amount in KES" />
-
-      <div class="row">
-        <div class="col-md-6">
-          <label class="form-label mt-3" for="monthlyIncome">Monthly Income</label>
-          <input class="form-control" id="monthlyIncome" type="number" min="0" placeholder="Income in KES" />
-        </div>
-        <div class="col-md-6">
-          <label class="form-label mt-3" for="repaymentMonths">Repayment Period</label>
-          <select class="form-select" id="repaymentMonths">
-            <option value="3">3 months</option>
-            <option value="6" selected>6 months</option>
-            <option value="9">9 months</option>
-            <option value="12">12 months</option>
+          <label class="form-label mt-3" for="occupation">Occupation</label>
+          <select class="form-select" id="occupation">
+            <option value="market vendor">Market vendor</option>
+            <option value="farmer">Farmer</option>
+            <option value="trader">Trader</option>
+            <option value="formal employee">Formal employee</option>
+            <option value="student">Student</option>
           </select>
+
+          <label class="form-label mt-3" for="amount">Loan Amount</label>
+          <input class="form-control" id="amount" type="number" min="1" placeholder="Amount in KES" />
+
+          <div class="row">
+            <div class="col-md-6">
+              <label class="form-label mt-3" for="monthlyIncome">Monthly Income</label>
+              <input class="form-control" id="monthlyIncome" type="number" min="0" placeholder="Income in KES" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label mt-3" for="repaymentMonths">Repayment Period</label>
+              <select class="form-select" id="repaymentMonths">
+                <option value="3">3 months</option>
+                <option value="6" selected>6 months</option>
+                <option value="9">9 months</option>
+                <option value="12">12 months</option>
+              </select>
+            </div>
+          </div>
+
+          <button id="submitButton" class="btn btn-primary mt-3 w-100" onclick="submitLoan()">
+            Submit Application
+          </button>
+
+          <div class="mt-3" id="result"></div>
+        </section>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Our AI PRIDE</h2>
+          <p>Three simple agent roles keep the assessment understandable for applicants and officers.</p>
+        </div>
+
+        <div class="agent-grid">
+          <div class="info-card accent-green">
+            <h3>Scout Agent</h3>
+            <p>Offers financial guidance around savings behavior, seasonal cash flow, and repayment planning.</p>
+          </div>
+          <div class="info-card accent-amber">
+            <h3>Guardian Agent</h3>
+            <p>Scores applications using transparent rules for livelihood context, amount, timing, and capacity.</p>
+          </div>
+          <div class="info-card accent-red">
+            <h3>Hunter Agent</h3>
+            <p>Escalates review cases so a human officer can validate complex or higher-risk applications.</p>
+          </div>
         </div>
       </div>
+    </section>
 
-      <button id="submitButton" class="btn btn-primary mt-3 w-100" onclick="submitLoan()">
-        Submit Application
-      </button>
+    <section class="workflow">
+      <div class="container">
+        <div class="section-header">
+          <h2>How It Works</h2>
+          <p>Applicants get fast feedback, while SACCO officers keep oversight and audit visibility.</p>
+        </div>
 
-      <div class="mt-3" id="result"></div>
-    </div>
-  </section>
+        <div class="workflow-steps">
+          <div class="step">
+            <span class="step-number">1</span>
+            <h3>Apply</h3>
+            <p>Submit applicant, livelihood, income, and loan details.</p>
+          </div>
+          <div class="step">
+            <span class="step-number">2</span>
+            <h3>Score</h3>
+            <p>Guardian Agent checks capacity, timing, and risk indicators.</p>
+          </div>
+          <div class="step">
+            <span class="step-number">3</span>
+            <h3>Review</h3>
+            <p>Hunter Agent flags applications that need officer validation.</p>
+          </div>
+          <div class="step">
+            <span class="step-number">4</span>
+            <h3>Audit</h3>
+            <p>Dashboards track decisions, fairness gaps, and review volume.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Ethical AI Framework</h2>
+          <p>The project keeps fairness, explainability, and human oversight visible across the workflow.</p>
+        </div>
+
+        <div class="ethics-grid">
+          <div class="info-card">
+            <h3>ETHOS</h3>
+            <p>Dignity-first decision making</p>
+          </div>
+          <div class="info-card">
+            <h3>TRACK</h3>
+            <p>Bias detection and audit trails</p>
+          </div>
+          <div class="info-card">
+            <h3>OASIS</h3>
+            <p>Data sovereignty and consent</p>
+          </div>
+          <div class="info-card">
+            <h3>PRIDE</h3>
+            <p>Human oversight and escalation</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <footer>
-    <p>Ujima AI PRIDE - Ethical AI for African Financial Inclusion</p>
-    <p>Built for SACCOs, farmers, and informal traders across Africa</p>
+    <div class="container">
+      <p>Ujima AI PRIDE - Ethical AI for African Financial Inclusion</p>
+      <p>Built for SACCOs, farmers, and informal traders across Africa</p>
+    </div>
   </footer>
 
   <script src="app.js"></script>
